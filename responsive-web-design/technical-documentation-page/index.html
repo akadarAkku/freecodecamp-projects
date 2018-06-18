@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <title>Array.prototype</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      font-size: 62.5%;
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      position: relative;
+    }
+
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 1.5rem;
+      width: 100vw;
+      border: 1px solid black;
+    }
+
+    .nav__header {
+      margin-left: 3rem;
+      font-size: 2rem;
+
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list__item {
+      border-top: 1px solid black;
+      width: 100%;
+      list-style-type: none;
+      font-size: 2rem;
+      padding: 0.5rem;
+    }
+
+    .list__link {
+      text-decoration: none;
+      margin-left: 3rem;
+      color: black;
+    }
+
+    .main {
+      position: relative;
+      top: 40rem;
+    }
+
+    main {
+      font-size: 2rem;
+      width: 90vw;
+      margin: auto;
+    }
+
+    pre {
+      background-color: #e6e6e6;
+      border: 2px solid black;
+      border-radius: 1rem;
+      overflow-x: auto;
+      overflow-y: auto;
+    }
+
+    @media screen and (min-width: 1000px) {
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 20vw;
+      }
+
+      .main {
+        left: 20vw;
+        width: 76vw;
+        margin-left: 2vw;
+        margin-right: 2vw;
+        top: 0;
+      }
+
+      #navbar {
+        padding: 0;
+      }
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <nav id="navbar" class="nav">
+      <header class="nav__header">
+        <b>Objects</b>
+      </header>
+      <ul class="list">
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Introduction">Introduction</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Literals_and_properties">Literals and properties</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Square_brackets">Square brackets</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Property_value_shorthand">Property value shorthand</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Existance_check">Existance check</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#The_for...in_loop">The for...in loop</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Copying_by_reference">Copying by reference</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Cloning_and_merging,_Object.assign">Cloning and merging, Object.assign</a>
+        </li>
+        <li class="list__item">
+          <a class="list__link nav-link" href="#Summary">Summary</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main" id="main-doc">
+    <section class="main-section" id="Introduction">
+      <header>
+        <h2>Introduction</h2>
+      </header>
+      <p>As we know from the chapter Data types, there are seven language types in JavaScript. Six of them are called “primitive”,
+        because their values contain only a single thing (be it a string or a number or whatever). In contrast, objects are
+        used to store keyed collections of various data and more complex entities. In JavaScript, objects penetrate almost
+        every aspect of the language. So we must understand them first before going in-depth anywhere else. An object can
+        be created with figure brackets
+        <code>{…}</code> with an optional list of properties. A property is a “key: value” pair, where key is a string (also called a “property
+        name”), and value can be anything. We can imagine an object as a cabinet with signed files. Every piece of data is
+        stored in its file by the key. It’s easy to find a file by its name or add/remove a file.</p>
+      <p>An empty object (“empty cabinet”) can be created using one of two syntaxes:</p>
+      <pre><code>
+    let user = new Object(); // "object constructor" syntax
+    let user = {};  // "object literal" syntax
+  </code></pre>
+    </section>
+    <section class="main-section" id="Literals_and_properties">
+      <header>
+        <h2>Literals and properties</h2>
+      </header>
+      <p>We can immediately put some properties into
+        <code>{...}</code> as “key: value” pairs:</p>
+      <pre>
+        <code>
+    let user = {     // an object
+      name: "John",  // by key "name" store value "John"
+      age: 30        // by key "age" store value 30
+    };
+        </code>
+      </pre>
+      <p>A property has a key (also known as “name” or “identifier”) before the colon ":" and a value to the right of it. In
+        the user object, there are two properties:
+      </p>
+      <ul>
+        <li>The first property has the name
+          <code>"name"</code> and the value
+          <code>"John"</code>.</li>
+        <li>The second one has the name
+          <code>"age"</code> and the value
+          <code>30</code>.</li>
+      </ul>
+      <p>The resulting user object can be imagined as a cabinet with two signed files labeled “name” and “age”.</p>
+      <p>We can add, remove and read files from it any time. Property values are accessible using the dot notation:
+      </p>
+      <pre>
+        <code>
+    // get fields of the object:
+    alert( user.name ); // John
+    alert( user.age ); // 30
+        </code>
+      </pre>
+      <p>The value can be of any type. Let’s add a boolean one:</p>
+      <pre>
+        <code>
+    user.isAdmin = true;
+        </code>
+      </pre>
+      <p>To remove a property, we can use
+        <code>delete</code> operator:</p>
+
+      <pre>
+        <code>
+    delete user.age;
+        </code>
+      </pre>
+      <p>We can also use multiword property names, but then they must be quoted:</p>
+      <pre>
+        <code>
+    let user = {
+      name: "John",
+      age: 30,
+      "likes birds": true  // multiword property name must be quoted
+    };
+        </code>
+      </pre>
+      <p>The last property in the list may end with a comma:</p>
+      <pre>
+        <code>
+    let user = {
+      name: "John",
+      age: 30,
+    }
+        </code>
+      </pre>
+      <p>That is called a “trailing” or “hanging” comma. Makes it easier to add/remove/move around properties, because all lines
+        become alike.</p>
+
+    </section>
+    <section class="main-section" id="Square_brackets">
+      <header>
+        <h2>Square brackets</h2>
+      </header>
+      <p>For multiword properties, the dot access doesn’t work:</p>
+
+      <pre>
+          <code>
+    // this would give a syntax error
+    user.likes birds = true
+          </code>
+        </pre>
+      <p>
+        That’s because the dot requires the
+        <code>key</code> to be a valid variable identifier. That is: no spaces and other limitations. There’s an alternative “square bracket
+        notation” that works with any string:
+      </p>
+      <pre>
+          <code>
+    let user = {};
+
+    // set
+    user["likes birds"] = true;
+    
+    // get
+    alert(user["likes birds"]); // true
+    
+    // delete
+    delete user["likes birds"];
+          </code>
+        </pre>
+      <p>
+        Now everything is fine. Please note that the string inside the brackets is properly quoted (any type of quotes will do).
+        Square brackets also provide a way to obtain the property name as the result of any expression – as opposed to a
+        literal string – like from a variable as follows:
+      </p>
+      <pre>
+          <code>
+    let key = "likes birds";
+
+    // same as user["likes birds"] = true;
+    user[key] = true;
+          </code>
+        </pre>
+      <p>
+        Here, the variable key may be calculated at run-time or depend on the user input. And then we use it to access the property.
+        That gives us a great deal of flexibility. The dot notation cannot be used in a similar way.
+      </p>
+      <p>
+        For instance:
+      </p>
+      <pre> 
+          <code>
+    let user = {
+      name: "John",
+      age: 30
+    };
+    
+    let key = prompt("What do you want to know about the user?", "name");
+    
+    // access by variable
+    alert( user[key] ); // John (if enter "name")
+          </code>
+        </pre>
+
+    </section>
+    <section class="main-section" id="Property_value_shorthand">
+      <header>
+        <h2>Property value shorthand</h2>
+      </header>
+      <p>
+        In real code we often use existing variables as values for property names.
+      </p>
+      <p>
+        For instance:
+      </p>
+      <pre>
+          <code>
+    function makeUser(name, age) {
+      return {
+        name: name,
+        age: age
+        // ...other properties
+      };
+    }
+    
+    let user = makeUser("John", 30);
+    alert(user.name); // John
+          </code>
+        </pre>
+      <p>
+        In the example above, properties have the same names as variables. The use-case of making a property from a variable is so
+        common, that there’s a special property value shorthand to make it shorter.
+      </p>
+      <p>
+        Instead of
+        <code>name:name</code> we can just write name, like this:
+      </p>
+      <pre>
+          <code>
+    function makeUser(name, age) {
+      return {
+        name, // same as name: name
+        age   // same as age: age
+        // ...
+      };
+    }
+          </code>
+        </pre>
+      <p>
+        We can use both normal properties and shorthands in the same object:
+      </p>
+      <pre>
+          <code>
+    let user = {
+      name,  // same as name:name
+      age: 30
+    };
+          </code>
+        </pre>
+
+    </section>
+    <section class="main-section" id="Existance_check">
+      <header>
+        <h2>Existance check</h2>
+      </header>
+      <p>
+        A notable objects feature is that it’s possible to access any property. There will be no error if the property doesn’t exist!
+        Accessing a non-existing property just returns
+        <code>undefined</code>. It provides a very common way to test whether the property exists – to get it and compare vs undefined:
+      </p>
+      <pre>
+          <code>
+    let user = {};
+
+    alert( user.noSuchProperty === undefined ); // true means "no such property"
+          </code>
+        </pre>
+      <p>
+        There also exists a special operator "in" to check for the existence of a property.
+      </p>
+      <p>
+        The syntax is:
+      </p>
+      <pre>
+          <code>
+    "key" in object
+          </code>
+        </pre>
+      <p>
+        For instance:
+      </p>
+      <pre>
+          <code>
+    let user = { name: "John", age: 30 };
+
+    alert( "age" in user ); // true, user.age exists
+    alert( "blabla" in user ); // false, user.blabla doesn't exist
+          </code>
+        </pre>
+      <p>
+        Please note that on the left side of in there must be a property name. That’s usually a quoted string. If we omit quotes,
+        that would mean a variable containing the actual name to be tested. For instance:
+      </p>
+      <pre>
+          <code>
+    let user = { age: 30 };
+
+    let key = "age";
+    alert( key in user ); // true, takes the name from key and checks for such property
+          </code>
+        </pre>
+      <p>
+        Usually, the strict comparison
+        <code>"=== undefined"</code> check works fine. But there’s a special case when it fails, but
+        <code>"in"</code> works correctly. It’s when an object property exists, but stores undefined:
+      </p>
+      <pre>
+          <code>
+    let obj = {
+      test: undefined
+    };
+    
+    alert( obj.test ); // it's undefined, so - no such property?
+    
+    alert( "test" in obj ); // true, the property does exist!
+          </code>
+        </pre>
+      <p>
+        In the code above, the property
+        <code>obj.test</code> technically exists. So the in operator works right. Situations like this happen very rarely, because undefined is
+        usually not assigned. We mostly use null for “unknown” or “empty” values. So the in operator is an exotic guest in
+        the code.
+      </p>
+
+    </section>
+    <section class="main-section" id="The_for...in_loop">
+      <header>
+        <h2>The for...in loop</h2>
+      </header>
+      <p>
+        To walk over all keys of an object, there exists a special form of the loop:
+        <code>for..in</code>. This is a completely different thing from the
+        <code>for(;;)</code> construct that we studied before.
+      </p>
+      <p>
+        The syntax:
+      </p>
+      <pre>
+          <code>
+    for(key in object) {
+      // executes the body for each key among object properties
+    }
+          </code>
+        </pre>
+      <p>
+        For instance, let’s output all properties of user:
+      </p>
+      <pre>
+          <code>
+    let user = {
+      name: "John",
+      age: 30,
+      isAdmin: true
+    };
+    
+    for(let key in user) {
+      // keys
+      alert( key );  // name, age, isAdmin
+      // values for the keys
+      alert( user[key] ); // John, 30, true
+    }
+          </code>
+        </pre>
+      <p>
+        Note that all “for” constructs allow us to declare the looping variable inside the loop, like
+        <code>let key</code> here. Also, we could use another variable name here instead of
+        <code>key</code>. For instance,
+        <code>"for(let prop in obj)"</code> is also widely used.
+      </p>
+
+    </section>
+    <section class="main-section" id="Copying_by_reference">
+      <header>
+        <h2>Copying by reference</h2>
+      </header>
+      <p>
+        One of the fundamental differences of objects vs primitives is that they are stored and copied “by reference”. Primitive
+        values: strings, numbers, booleans – are assigned/copied “as a whole value”. For instance:
+      </p>
+      <pre>
+          <code>
+    let message = "Hello!";
+    let phrase = message;
+          </code>
+        </pre>
+      <p>
+        As a result we have two independent variables, each one is storing the string "Hello!".
+      </p>
+      <p>
+        Objects are not like that. A variable stores not the object itself, but its “address in memory”, in other words “a reference”
+        to it. Here’s the picture for the object:
+      </p>
+      <pre>
+          <code>
+    let user = {
+      name: "John"
+    };
+          </code>
+        </pre>
+      <p>
+        Here, the object is stored somewhere in memory. And the variable user has a “reference” to it. When an object variable is
+        copied – the reference is copied, the object is not duplicated. If we imagine an object as a cabinet, then a variable
+        is a key to it. Copying a variable duplicates the key, but not the cabinet itself.
+      </p>
+      <p>
+        For instance:
+      </p>
+      <pre>
+          <code>
+    let user = { name: "John" };
+
+    let admin = user; // copy the reference
+          </code>
+        </pre>
+      <p>
+        Now we have two variables, each one with the reference to the same object:
+      </p>
+      <p>
+        We can use any variable to access the cabinet and modify its contents:
+      </p>
+      <pre>
+          <code>
+    let user = { name: 'John' };
+
+    let admin = user;
+    
+    admin.name = 'Pete'; // changed by the "admin" reference
+    
+    alert(user.name); // 'Pete', changes are seen from the "user" reference
+          </code>
+        </pre>
+      <p>
+        The example above demonstrates that there is only one object. As if we had a cabinet with two keys and used one of them (admin)
+        to get into it. Then, if we later use the other key (user) we would see changes.
+      </p>
+
+    </section>
+    <section class="main-section" id="Cloning_and_merging,_Object.assign">
+      <header>
+        <h2>Cloning and merging, Object.assign</h2>
+      </header>
+      <p>
+        So, copying an object variable creates one more reference to the same object. But what if we need to duplicate an object?
+        Create an independent copy, a clone? That’s also doable, but a little bit more difficult, because there’s no built-in
+        method for that in JavaScript. Actually, that’s rarely needed. Copying by reference is good most of the time. But
+        if we really want that, then we need to create a new object and replicate the structure of the existing one by iterating
+        over its properties and copying them on the primitive level.
+      </p>
+      <p>
+        Like this:
+      </p>
+      <pre>
+        <code>
+    let user = {
+      name: "John",
+      age: 30
+    };
+    
+    let clone = {}; // the new empty object
+    
+    // let's copy all user properties into it
+    for (let key in user) {
+      clone[key] = user[key];
+    }
+    
+    // now clone is a fully independant clone
+    clone.name = "Pete"; // changed the data in it
+    
+    alert( user.name ); // still John in the original object
+        </code>
+      </pre>
+      <p>
+        Also we can use the method Object.assign for that.
+      </p>
+      <p>
+        The syntax is:
+      </p>
+      <pre>
+        <code>
+    Object.assign(dest[, src1, src2, src3...])
+        </code>
+      </pre>
+      <ul>
+        <li>
+          Arguments dest, and src1, ..., srcN (can be as many as needed) are objects.
+        </li>
+        <li>
+          It copies the properties of all objects src1, ..., srcN into dest. In other words, properties of all arguments starting from
+          the 2nd are copied into the 1st. Then it returns dest.
+        </li>
+      </ul>
+      <p>
+        For instance, we can use it to merge several objects into one:
+      </p>
+      <pre>
+        <code>
+    let user = { name: "John" };
+
+    let permissions1 = { canView: true };
+    let permissions2 = { canEdit: true };
+    
+    // copies all properties from permissions1 and permissions2 into user
+    Object.assign(user, permissions1, permissions2);
+    
+    // now user = { name: "John", canView: true, canEdit: true }
+        </code>
+      </pre>
+      <p>
+        If the receiving object (user) already has the same named property, it will be overwritten:
+      </p>
+      <pre>
+        <code>
+    let user = { name: "John" };
+
+    // overwrite name, add isAdmin
+    Object.assign(user, { name: "Pete", isAdmin: true });
+    
+    // now user = { name: "Pete", isAdmin: true }
+        </code>
+      </pre>
+      <p>
+        We also can use Object.assign to replace the loop for simple cloning:
+      </p>
+      <pre>
+        <code>
+    let user = {
+      name: "John",
+      age: 30
+    };
+    
+    let clone = Object.assign({}, user);
+        </code>
+      </pre>
+      <p>
+        It copies all properties of user into the empty object and returns it. Actually, the same as the loop, but shorter.
+      </p>
+      <p>
+        Until now we assumed that all properties of user are primitive. But properties can be references to other objects. What to
+        do with them?
+      </p>
+      <p>
+        Like this:
+      </p>
+      <pre>
+        <code>
+    let user = {
+      name: "John",
+      sizes: {
+        height: 182,
+        width: 50
+      }
+    };
+    
+    alert( user.sizes.height ); // 182
+        </code>
+      </pre>
+      <p>
+        Now it’s not enough to copy clone.sizes = user.sizes, because the user.sizes is an object, it will be copied by reference.
+        So clone and user will share the same sizes:
+      </p>
+      <p>
+        Like this:
+      </p>
+      <pre>
+        <code>
+    let user = {
+      name: "John",
+      sizes: {
+        height: 182,
+        width: 50
+      }
+    };
+    
+    let clone = Object.assign({}, user);
+    
+    alert( user.sizes === clone.sizes ); // true, same object
+    
+    // user and clone share sizes
+    user.sizes.width++;       // change a property from one place
+    alert(clone.sizes.width); // 51, see the result from the other one
+        </code>
+      </pre>
+      <p>
+        To fix that, we should use the cloning loop that examines each value of user[key] and, if it’s an object, then replicate
+        its structure as well. That is called a “deep cloning”.
+      </p>
+      <p>
+        There’s a standard algorithm for deep cloning that handles the case above and more complex cases, called the Structured cloning
+        algorithm. In order not to reinvent the wheel, we can use a working implementation of it from the JavaScript library
+        lodash, the method is called _.cloneDeep(obj).
+      </p>
+    </section>
+    <section class="main-section" id="Summary">
+      <header>
+        <h2>Summary</h2>
+      </header>
+      <p>
+        Objects are associative arrays with several special features.
+      </p>
+      <p>
+        They store properties (key-value pairs), where:
+      </p>
+      <ul>
+        <li>
+          Property keys must be strings or symbols (usually strings).
+        </li>
+        <li>
+          Values can be of any type.
+        </li>
+      </ul>
+      <p>
+        To access a property, we can use:
+      </p>
+      <ul>
+        <li>
+          The dot notation: obj.property.
+        </li>
+        <li>
+          Square brackets notation obj["property"]. Square brackets allow to take the key from a variable, like obj[varWithKey].
+        </li>
+      </ul>
+      <p>
+        Additional operators:
+      </p>
+      <ul>
+        <li>
+          To delete a property: delete obj.prop.
+        </li>
+        <li>
+          To check if a property with the given key exists: "key" in obj.
+        </li>
+        <li>
+          To iterate over an object: for(let key in obj) loop.
+        </li>
+      </ul>
+      <p>
+        Objects are assigned and copied by reference. In other words, a variable stores not the “object value”, but a “reference”
+        (address in memory) for the value. So copying such a variable or passing it as a function argument copies that reference,
+        not the object. All operations via copied references (like adding/removing properties) are performed on the same
+        single object.
+      </p>
+      <p>
+        To make a “real copy” (a clone) we can use Object.assign or _.cloneDeep(obj).
+      </p>
+      <p>
+        What we’ve studied in this chapter is called a “plain object”, or just Object.
+      </p>
+      <p>
+        There are many other kinds of objects in JavaScript:
+      </p>
+      <ul>
+        <li>
+          Array to store ordered data collections,
+        </li>
+        <li>
+          Date to store the information about the date and time,
+        </li>
+        <li>
+          Error to store the information about an error.
+        </li>
+        <li>
+          …And so on.
+        </li>
+      </ul>
+      <p>
+        They have their special features that we’ll study later. Sometimes people say something like “Array type” or “Date type”,
+        but formally they are not types of their own, but belong to a single “object” data type. And they extend it in various
+        ways.
+      </p>
+      <p>
+        Objects in JavaScript are very powerful. Here we’ve just scratched the surface of a topic that is really huge. We’ll be closely
+        working with objects and learning more about them in further parts of the tutorial.
+      </p>
+    </section>
+  </main>
+</body>
+
+</html>
