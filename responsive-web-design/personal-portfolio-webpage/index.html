@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <title>Portfolio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    html,
+    body {
+      font-size: 62.5%
+    }
+
+    .header {
+      position: fixed;
+      width: 100vw;
+      font-size: 2rem;
+      z-index: 100;
+      background-color: white;
+    }
+
+    .nav {}
+
+    .nav__list {
+      border-top: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .nav__item {
+      list-style-type: none;
+      padding: 1rem;
+      border-bottom: 1px solid black;
+      width: 100%;
+    }
+
+    .nav__link {
+      width: 100%;
+      text-decoration: none;
+      color: black;
+    }
+
+    .main {
+      position: absolute;
+      width: 100vw;
+    }
+
+    .section--welcome {
+      height: 100vh;
+      padding-top: 15rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffcb7e;
+    }
+
+    .title {
+      font-size: 3.5rem;
+    }
+
+    .title--secondary {
+      display: block;
+      font-size: 1.7rem;
+      color: gray;
+      text-align: center;
+    }
+
+    .projects {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .subtitle {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section--projects {
+      background-color: #beffd2;
+      padding: 10rem 0;
+    }
+
+    .project {
+      width: 80%;
+      border: 1px solid black;
+      font-size: 1.8rem;
+      margin-top: 2rem;
+      padding: 2rem;
+    }
+
+    .project__title {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .project__description {
+      margin-bottom: 1rem;
+    }
+
+    .section--contact {
+      background-color: #ff9464;
+      padding: 10rem 0;
+    }
+
+    .contacts {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 15rem;
+      height: 15rem;
+      font-size: 2rem;
+      border: 1px solid black;
+    }
+
+    @media screen and (min-width: 600px) {
+      .projects {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
+
+      .project {
+        width: 40%;
+      }
+    }
+
+    @media screen and (min-width: 1000px) {
+      .nav__list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        box-shadow: 0 3px 6px #888888;
+        justify-content: flex-end;
+      }
+
+      .nav__item {
+        width: 10%;
+        border: 0;
+      }
+
+      .nav__link {
+        display: inline-block;
+        padding: 1rem;
+      }
+
+      .project {
+        width: 20%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav id="navbar" class="nav">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a href="#welcome-section" class="nav__link">About</a>
+        </li>
+        <li class="nav__item">
+          <a href="#projects" class="nav__link">Projects</a>
+        </li>
+        <li class="nav__item">
+          <a href="#contact" class="nav__link">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main">
+    <section class="section section--welcome" id="welcome-section">
+      <h1 class="title">
+        Web Developer
+        <span class="title--secondary">
+          Javascript, HTML, CSS
+        </span>
+      </h1>
+    </section>
+
+    <section class="section section--projects" id="projects">
+      <h2 class="subtitle">Projects</h2>
+      <div class="projects">
+        <div class="project project-tile">
+          <p class="project__title">Techinal Documentation Page</p>
+          <p class="project__description">Project written for FreeCodeCamp response web design.</p>
+          <p class="project__description">Used: HTML and CSS.</p>
+          <div class="project__actions">
+            <a class="project__link" href="https://github.com/jm18457/freecodecamp-projects/tree/master/responsive-web-design/technical-documentation-page">Source Code</a>
+            <a class="project__link" href="https://jm18457.com/freecodecamp-projects/responsive-web-design/technical-documentation-page/index.html">Live Demo!</a>
+          </div>
+
+        </div>
+        <div class="project project-tile">
+          <p class="project__title">Product Landing Page</p>
+          <p class="project__description">Project written for FreeCodeCamp response web design.</p>
+          <p class="project__description">Used: HTML and CSS.</p>
+          <div class="project__actions">
+            <a class="project__link" href="https://github.com/jm18457/freecodecamp-projects/tree/master/responsive-web-design/product-landing-page">Source Code</a>
+            <a class="project__link" href="https://jm18457.com/freecodecamp-projects/responsive-web-design/product-landing-page/index.html">Live Demo!</a>
+          </div>
+        </div>
+        <div class="project project-tile">
+          <p class="project__title">Survey Form</p>
+          <p class="project__description">Project written for FreeCodeCamp response web design.</p>
+          <p class="project__description">Used: HTML and CSS.</p>
+          <div class="project__actions">
+            <a class="project__link" href="https://github.com/jm18457/freecodecamp-projects/tree/master/responsive-web-design/build-a-survey-form">Source Code</a>
+            <a class="project__link" href="https://jm18457.com/freecodecamp-projects/responsive-web-design/build-a-survey-form/index.html">Live Demo!</a>
+          </div>
+        </div>
+        <div class="project project-tile">
+          <p class="project__title">Tic Tac Toe</p>
+          <p class="project__description">Play vs Random Computer or vs another player.</p>
+          <p class="project__description">Against another player can setup different board size up to 20x20.</p>
+          <div class="project__actions">
+            <a class="project__link" href="https://github.com/jm18457/freecodecamp-tic-tac-toe">Source Code</a>
+            <a class="project__link" href="http://jm18457.com/freecodecamp-tic-tac-toe/">Live Demo!</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section section--contact" id="contact">
+      <h2 class="subtitle">Contact</h2>
+      <div class="contacts">
+        <a id="profile-link" target="_blank" class="contact-link" href="https://github.com/jm18457">GitHub</a>
+        <a class="contact-link" href="https://www.linkedin.com">Linkedin</a>
+        <a class="contact-link" href="https://www.facebook.com">Facebook</a>
+        <a class="contact-link" href="https://www.google.com">Google</a>
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>
