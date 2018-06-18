@@ -7,15 +7,288 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <link rel="stylesheet" href="./style.css">
   <title>Bracto</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      font-size: 62.5%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .body {
+      position: relative;
+    }
+
+    .header {
+      z-index: 100;
+      overflow: hidden;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      font-size: 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      border-bottom: 1px solid lightgray;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .brand__img {
+      width: auto;
+      height: 5vh;
+    }
+
+    .brand__name {}
+
+    .nav {}
+
+    .nav__list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      -webkit-margin-before: 0em;
+      -webkit-margin-after: 0em;
+      -webkit-padding-start: 0;
+    }
+
+    .nav__item {
+      list-style-type: none;
+      width: 100vw;
+    }
+
+    .nav__link {
+      text-decoration: none;
+      color: black;
+      width: 100%;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .main {
+      position: relative;
+      width: 100vw;
+    }
+
+    .section {
+      padding-top: 10rem;
+      padding-bottom: 10rem;
+    }
+
+    .section__subtitle {
+      font-size: 3rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .section--about {
+      background: linear-gradient(to bottom right, #19ff8c, #66ffb2);
+      margin-top: 5rem;
+    }
+
+    .about-wrapper {
+      width: 90vw;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ABOUT component */
+
+    .about {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about__title {
+      font-size: 2rem;
+    }
+
+    .about__line {
+      width: 100%;
+      border-color: black;
+    }
+
+    .about__description {
+      font-size: 1.5rem;
+    }
+
+    /* SERVICES */
+
+    .section--services {
+      background-color: #73f3ff;
+    }
+
+    .services {
+      display: flex;
+      flex-direction: row“;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    /* SERVICE COMPONENT */
+
+    .service {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      text-align: center;
+    }
+
+    .service__icon {
+      align-self: center;
+      font-size: 2rem;
+      padding: 2rem;
+      border: 1px solid black;
+      border-radius: 50%;
+    }
+
+    .service__title {
+      font-size: 2rem;
+      -webkit-margin-before: 1rem;
+      -webkit-margin-after: 1rem;
+    }
+
+    .service__paragraph {
+      font-size: 1.5rem;
+    }
+
+    /* IFRAME COMPONENT */
+
+    .iframe-wrapper {
+      position: relative;
+      overflow: hidden;
+      padding-top: 62.5%;
+    }
+
+    .iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .section--contact {
+      background-color: burlywood;
+    }
+
+    .form {
+      font-size: 1.7rem;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .form__item {
+      width: 80%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form__input {
+      font-size: 1.7rem;
+      padding: 0.5rem;
+      border-radius: 1rem;
+    }
+
+    .form__submit {
+      width: 50%;
+      font-size: 1.7rem;
+      border: 1px solid lightgray;
+      margin: auto;
+      padding: 0.5rem 0;
+      margin-top: 1rem;
+      border-radius: 1rem;
+    }
+
+    @media screen and (min-width: 600px) {
+      .header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 5rem;
+      }
+
+      .header-empty {
+        flex-grow: 1;
+      }
+
+      .brand {
+        flex-grow: 1;
+      }
+
+      .nav {
+        flex-grow: 1;
+      }
+
+      .nav__list {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .nav__item {
+        width: 33%;
+        justify-content: space-between;
+      }
+      .service {
+        width: 50%;
+      }
+    }
+
+    @media screen and (min-width: 900px) {
+      .service {
+        width: 25%;
+      }
+
+      .about-wrapper {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .about {
+        flex-grow: 1;
+      }
+
+      .about-video-wrapper {
+        flex-grow: 10;
+        margin-left: 1rem;
+      }
+
+      .form {
+        width: 50%;
+        margin: auto;
+      }
+
+      .form__submit {
+        width: 35%;
+      }
+    }
+  </style>
 </head>
 
-<body>
+<body class="body">
   <header class="header" id="header">
     <div class="brand">
-      <img src="http://www.logologo.com/logos/globe-swooshes-logo.jpg" class="brand__img" id="header-img"> Bracto
+      <img src="http://www.logologo.com/logos/globe-swooshes-logo.jpg" class="brand__img" id="header-img">
+      <div class="brand__name">Bracto</div>
     </div>
-
+    <div class="header-empty"></div>
     <nav class="nav" id="nav-bar">
       <ul class="nav__list">
         <li class="nav__item">
@@ -24,12 +297,12 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__link nav-link" href="#contact">
+          <a class="nav__link nav-link" href="#services">
             Services
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__link nav-link" href="#services">
+          <a class="nav__link nav-link" href="#contact">
             Contact
           </a>
         </li>
@@ -38,49 +311,58 @@
   </header>
   <main class="main">
     <section id="about" class="section section--about">
-      <div class="about">
-        <h1 class="about__title">Bracto Landing Page
-          <span class="about__title--secondary">greatest product in all history</span>
-        </h1>
-        <hr class="about__line" />
-        <p class="about__description">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illo laboriosam minus suscipit consequatur!
-        </p>
+      <div class="about-wrapper">
+        <div class="about">
+          <h1 class="about__title">Bracto Landing Page
+            <span class="about__title--secondary">greatest product in all history</span>
+          </h1>
+          <hr class="about__line">
+          <p class="about__description">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illo laboriosam minus suscipit consequatur!
+          </p>
+        </div>
+        <div class="about-video-wrapper">
+          <div class="iframe-wrapper">
+            <iframe id="video" class="iframe" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+            </iframe>
+          </div>
+        </div>
       </div>
-      <iframe id="video" class="iframe" width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-      </iframe>
-
     </section>
     <section id="services" class="section section--services">
       <div class="services">
+        <h2 class="section__subtitle">Services</h2>
         <div class="service">
           <i class="service__icon fa fa-cloud"></i>
-          <h2 class="service__title">Responsive Design</h2>
+          <h3 class="service__title">Responsive Design</h3>
           <p class="service__paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illo laboriosam minus suscipit consequatur!</p>
         </div>
         <div class="service">
           <i class="service__icon fa fa-cloud"></i>
-          <h2 class="service__title">Responsive Design</h2>
+          <h3 class="service__title">Responsive Design</h3>
           <p class="service__paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illo laboriosam minus suscipit consequatur!</p>
         </div>
         <div class="service">
           <i class="service__icon fa fa-cloud"></i>
-          <h2 class="service__title">Responsive Design</h2>
+          <h3 class="service__title">Responsive Design</h3>
           <p class="service__paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illo laboriosam minus suscipit consequatur!</p>
         </div>
         <div class="service">
           <i class="service__icon fa fa-cloud"></i>
-          <h2 class="service__title">Responsive Design</h2>
+          <h3 class="service__title">Responsive Design</h3>
           <p class="service__paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illo laboriosam minus suscipit consequatur!</p>
         </div>
       </div>
     </section>
 
     <section id="contact" class="section section--contact">
+      <h2 class="section__subtitle">Contact</h2>
       <form method="POST" action="https://www.freecodecamp.com/email-submit" id="form" class="form">
-        <label for="email" class="form__label">Email</label>
-        <input id="email" name="email" class="form__input" type="email" placeholder="john.snow@gmail.com" />
-        <input type="submit" value="Submit" id="submit" />
+        <div class="form__item">
+          <label for="email" class="form__label">Email</label>
+          <input id="email" name="email" class="form__input" type="email" placeholder="john.snow@gmail.com" />
+        </div>
+        <input class="form__submit" type="submit" value="Submit" id="submit" />
       </form>
     </section>
   </main>
