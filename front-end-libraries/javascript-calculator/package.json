@@ -1,7 +1,7 @@
 {
   "name": "javascript-calculator",
   "version": "0.1.0",
-  "homepage": "https://myusername.github.io/freecodecamp-projects/front-end-libraries/javascript-calculator/build/index.html",
+  "homepage": "https://jm18457.github.io/freecodecamp-projects/front-end-libraries/javascript-calculator/build/index.html",
   "private": true,
   "dependencies": {
     "gh-pages": "^1.2.0",
