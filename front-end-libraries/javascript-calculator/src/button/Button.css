@@ -1,2 +1,15 @@
 .button {
+  font-size: 2rem;
+  background-color: rgb(224, 224, 244);
+  border: 1px solid rgb(142, 142, 142);
+  padding: 1rem 0;
+}
+
+.button--orange {
+  background-color: rgb(255, 142, 0);
+  color: white;
+}
+
+.button--gray {
+  background-color: rgb(214, 214, 214);
 }

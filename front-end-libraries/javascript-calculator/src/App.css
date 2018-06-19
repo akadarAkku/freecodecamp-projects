@@ -1,86 +1,100 @@
+.wrapper {
+  background-color: aquamarine;
+  min-height: 100vh;
+}
+
 .calculator {
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 1rem;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .calculator__display {
   grid-column: 1 / span 4;
-  grid-row: 1 / span 2;
-  background-color: lightgray;
+  grid-row: 1 / 2;
+  background-color: rgb(76, 76, 76);
+  color: white;
+  font-size: 4rem;
+  text-align: end;
+  padding: 1rem;
 }
 
 .calculator__button--clear {
   grid-column: 1 / span 3;
-  grid-row: 3 / 4;
+  grid-row: 2 / 3;
 }
 
 .calculator__button--divide {
   grid-column: 4 / 5;
-  grid-row: 3 / 4;
+  grid-row: 2 / 3;
 }
 
 .calculator__button--seven {
   grid-column: 1 / 2;
-  grid-row: 4 / 5;
+  grid-row: 3 / 4;
 }
 .calculator__button--eight {
   grid-column: 2 / 3;
-  grid-row: 4 / 5;
+  grid-row: 3 / 4;
 }
 .calculator__button--nine {
   grid-column: 3 / 4;
-  grid-row: 4 / 5;
+  grid-row: 3 / 4;
 }
 .calculator__button--multiply {
   grid-column: 4 / 5;
-  grid-row: 4 / 5;
+  grid-row: 3 / 4;
 }
 
 .calculator__button--four {
   grid-column: 1 / 2;
-  grid-row: 5 / 6;
+  grid-row: 4 / 5;
 }
 .calculator__button--five {
   grid-column: 2 / 3;
-  grid-row: 5 / 6;
+  grid-row: 4 / 5;
 }
 .calculator__button--six {
   grid-column: 3 / 4;
-  grid-row: 5 / 6;
+  grid-row: 4 / 5;
 }
 .calculator__button--add {
   grid-column: 4 / 5;
-  grid-row: 5 / 6;
+  grid-row: 4 / 5;
 }
 
 .calculator__button--one {
   grid-column: 1 / 2;
-  grid-row: 6 / 7;
+  grid-row: 5 / 6;
 }
 .calculator__button--two {
   grid-column: 2 / 3;
-  grid-row: 6 / 7;
+  grid-row: 5 / 6;
 }
 .calculator__button--three {
   grid-column: 3 / 4;
-  grid-row: 6 / 7;
+  grid-row: 5 / 6;
 }
 .calculator__button--substract {
   grid-column: 4 / 5;
-  grid-row: 6 / 7;
+  grid-row: 5 / 6;
 }
 
 .calculator__button--zero {
   grid-column: 1 / 3;
-  grid-row: 7 / 8;
+  grid-row: 6 / 7;
 }
 .calculator__button--decimal {
   grid-column: 3 / 4;
-  grid-row: 7 / 8;
+  grid-row: 6 / 7;
 }
 .calculator__button--equals {
   grid-column: 4 / 5;
-  grid-row: 7 / 8;
+  grid-row: 6 / 7;
+}
+
+@media screen and (min-width: 600px) {
 }
