@@ -1,0 +1,18 @@
+.main {
+  background: linear-gradient(to right, #0b486b, #f56217);
+  padding: 10vh;
+}
+
+.textarea-wrapper {
+  width: 60vw;
+  margin: auto;
+  margin-bottom: 10vh;
+}
+
+.content-wrapper {
+  width: 80vw;
+  margin: auto;
+  border: 1px solid black;
+  padding: 2rem;
+  background-color: white;
+}
