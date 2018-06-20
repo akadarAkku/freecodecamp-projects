@@ -1,6 +1,7 @@
 {
   "name": "freecodecamp-pomodoro-clock",
   "version": "0.1.0",
+  "homepage": "https://jm18457.github.io/freecodecamp-projects/front-end-libraries/pomodoro-clock/build/index.html",
   "private": true,
   "dependencies": {
     "gh-pages": "^1.1.0",
