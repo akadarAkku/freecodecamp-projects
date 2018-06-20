@@ -15,6 +15,7 @@ All projects I completed for [www.freecodecamp.org](https://www.freecodecamp.org
 * [JavaScript Calculator](http://jm18457.com/freecodecamp-projects/front-end-libraries/javascript-calculator/build/index.html)
 * [Markdown Previewer](https://codepen.io/jm18457/pen/QxQwNp)
 * [Drum Machine](http://jm18457.com/freecodecamp-projects/front-end-libraries/drum-machine/index.html)
+* [Pomodoro Clock](http://jm18457.com/freecodecamp-projects/front-end-libraries/pomodoro-clock/build/index.html)
 
 
 ## Data Visualization
