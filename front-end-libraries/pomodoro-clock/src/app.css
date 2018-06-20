@@ -1,0 +1,12 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5em;
+  font-size: 24px;
+}
+
+.app__div {
+  width: 80%;
+  margin: auto;
+}

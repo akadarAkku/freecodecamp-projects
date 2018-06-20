@@ -1,0 +1,19 @@
+.setup__controls {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.setup__time {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.setup__timer {
+  font-size: 32px;
+}
+
+.active {
+  background-color: blue;
+}
