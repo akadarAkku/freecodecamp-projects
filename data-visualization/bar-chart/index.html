@@ -5,11 +5,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="./script.js"></script>
   <title>Bar Chart</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .svg {
+      border: 1px solid black;
+      padding: 5rem;
+    }
+
+    .rect:hover {
+      fill: black;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="root"></div>
+  <script>
+
+    (async function createChart() {
+      const dataset = await getDataset();
+      console.log(d3.min(dataset, d => new Date(d[0])));
+      const w = 600;
+      const h = 300;
+
+      const svg = d3.select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("class", "svg");
+
+      const yMax = d3.max(dataset, d => d[1]);
+      const xScale = d3.scaleTime().domain([d3.min(dataset, d => new Date(d[0])),
+      d3.max(dataset, d => new Date(d[0]))]).range([0, w]);
+      const yScale = d3.scaleLinear().domain([0, yMax]).range([h, 0]);
+
+
+      svg.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", (d, i) => i * w / dataset.length)
+        .attr("y", (d, i) => yScale(d[1]))
+        .attr("width", w / dataset.length)
+        .attr("height", (d, i) => h - yScale(d[1]))
+        .attr("fill", "blue")
+        .attr("class", "rect")
+        .append("title")
+        .text("test")
+
+      const yAxis = d3.axisLeft(yScale);
+      const xAxis = d3.axisBottom(xScale);
+      svg.append("g").attr("transform", `translate(0,0)`).call(yAxis);
+      svg.append("g").attr("transform", `translate(0,${h})`).call(xAxis);
+    })();
+
+    function getDataset() {
+      return fetch(
+        "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json"
+      )
+        .then(response => response.json())
+        .then(json => {
+          return json.data;
+        });
+    }
+  </script>
 </body>
 
 </html>
