@@ -16,6 +16,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "homepage": "https://jm18457.github.io/freecodecamp-pomodoro-clock"
+  }
 }
