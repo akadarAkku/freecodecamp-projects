@@ -1,35 +1,28 @@
-let dataset;
-// Define the div for the tooltip
-const svg = d3.select("#chart").append("svg");
-const div = d3
-  .select("body")
-  .append("div")
-  .attr("class", "tooltip")
-  .attr("id", "tooltip")
-  .style("opacity", 0);
-const container = document.querySelector("#chart");
-const width = 1000;
-const height = 700;
-const padding = 50;
+getDataset().then(dataset => {
+  drawChart(dataset);
+});
 
-const x = svg.append("g");
-const y = svg.append("g");
-getDataset()
-  .then(_dataset => {
-    console.log(_dataset);
-    dataset = _dataset;
-  })
-  .then(() => {
-    drawChart();
-  });
+function drawChart(dataset) {
+  // size constants
+  const width = 1000;
+  const height = 700;
+  const padding = 50;
 
-function drawChart() {
-  svg
+  const svg = d3
+    .select("#chart-container")
+    .append("svg")
     .attr("width", width)
     .attr("height", height)
     .attr("class", "svg");
 
-  const yMax = d3.max(dataset, d => d[1]);
+  const tooltipDiv = d3
+    .select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .attr("id", "tooltip")
+    .style("opacity", 0);
+
+  // scales
   const xScale = d3
     .scaleTime()
     .domain([
@@ -39,7 +32,7 @@ function drawChart() {
     .range([padding, width - padding]);
   const yScale = d3
     .scaleLinear()
-    .domain([0, yMax])
+    .domain([0, d3.max(dataset, d => d[1])])
     .range([height - padding, padding]);
 
   svg
@@ -58,12 +51,12 @@ function drawChart() {
     .attr("data-date", d => d[0])
     .attr("data-gdp", d => d[1])
     .on("mouseover", d => {
-      div
+      tooltipDiv
         .transition()
         .duration(200)
         .style("opacity", 0.9);
 
-      div
+      tooltipDiv
         .html("Date: " + d[0] + "<br />" + "GDP: " + d[1])
         .attr("data-date", d[0])
         .style("left", d3.event.pageX + 30 + "px")
@@ -71,11 +64,14 @@ function drawChart() {
         .style("visibility", "visible");
     })
     .on("mouseout", d => {
-      div.style("visibility", "hidden");
+      tooltipDiv.style("visibility", "hidden");
     });
 
+  // X / Y axis
   const yAxis = d3.axisLeft(yScale);
   const xAxis = d3.axisBottom(xScale);
+  const x = svg.append("g");
+  const y = svg.append("g");
   x.selectAll(".tick.major").attr("class", "tick");
   y.selectAll(".tick.major").attr("class", "tick");
   x.attr("transform", `translate(0,${height - padding})`)
@@ -87,6 +83,7 @@ function drawChart() {
     .attr("id", "y-axis")
     .call(yAxis);
 
+  // title
   svg
     .append("text")
     .attr("x", width / 2)

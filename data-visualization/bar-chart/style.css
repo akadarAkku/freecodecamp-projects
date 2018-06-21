@@ -8,7 +8,7 @@ body {
   font-size: 62.5%;
 }
 
-#chart {
+.chart-container {
   background-color: white;
   padding: 1rem;
   border: 1px solid black;
