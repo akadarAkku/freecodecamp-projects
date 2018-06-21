@@ -34,6 +34,10 @@ function drawChart(dataset) {
     .range([height - padding, padding]);
   console.log(yMin);
   console.log(yMax);
+
+  // setup color
+  var color = d3.scaleOrdinal(d3.schemeCategory10);
+
   svg
     .selectAll("circle")
     .data(dataset)
@@ -44,15 +48,8 @@ function drawChart(dataset) {
     .attr("r", 5)
     .attr("class", "dot")
     .attr("data-xvalue", d => d.Year)
-    .attr("data-yvalue", d => d.Time);
-  // svg
-  //   .selectAll("text")
-  //   .data(dataset)
-  //   .enter()
-  //   .append("text")
-  //   .attr("x", d => xScale(d.Year) + 10)
-  //   .attr("y", d => yScale(createDate(d.Time)) - 10)
-  //   .text(d => `${d.Seconds}, ${d.Year}`);
+    .attr("data-yvalue", d => new Date(d.Seconds * 1000))
+    .attr("fill", d => color(d.Doping === ""));
 
   const xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
   const x = svg.append("g");
@@ -78,6 +75,16 @@ function drawChart(dataset) {
     .attr("class", "title")
     .attr("transform", `translate(${-2.5 * padding},0)`)
     .text("Time");
+
+  // legend
+  svg
+    .select("g")
+    .data(dataset)
+    .enter()
+    .select("g")
+
+    .attr("class", "legend")
+    .selectAll("text");
 }
 
 getDataset().then(data => drawChart(data));
