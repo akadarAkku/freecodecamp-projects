@@ -17,6 +17,7 @@ All projects I completed for [www.freecodecamp.org](https://www.freecodecamp.org
 
 
 ## Data Visualization
+* [Bar Chart](http://jm18457.com/freecodecamp-projects/data-visualization/bar-chart/index.html) 
 
 ## Apis and Microservices Certification
 
