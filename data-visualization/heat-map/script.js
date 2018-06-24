@@ -5,11 +5,12 @@ const getData = () => {
 };
 
 getData().then(data => {
+  console.log(data);
   drawGraph(data);
 });
 
-const drawGraph = data => {
-  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+const drawGraph = ({ baseTemperature, monthlyVariance }) => {
+  const margin = { top: 0, right: 0, bottom: 0, left: 50 };
   const fullWidth = 1920;
   const fullHeight = 1080;
   const width = fullWidth - margin.left - margin.right;
@@ -30,6 +31,22 @@ const drawGraph = data => {
     .attr("height", height)
     .style("fill", "lightblue")
     .style("stroke", "green");
+
+  const xScale = d3
+    .scaleLinear()
+    .domain(d3.extent(monthlyVariance, d => d.year))
+    .range([0, width]);
+
+  const yScale = d3
+    .scaleBand()
+    .domain(monthlyVariance.map(variance => variance.month))
+    .range([height, 0]);
+
+  const xAxis = d3.axisBottom(xScale);
+  svg.append("g").call(xAxis);
+
+  const yAxis = d3.axisLeft(yScale);
+  svg.append("g").call(yAxis);
 };
 
 const responsivefy = svg => {
