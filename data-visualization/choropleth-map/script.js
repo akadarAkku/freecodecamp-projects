@@ -8,82 +8,151 @@ const getData = () => {
 };
 
 getData().then(data => {
-  drawGraph(data);
+  return fetch(educationURL)
+    .then(eduResponse => eduResponse.json())
+    .then(edu => drawGraph(data, edu));
 });
 
 const toArray = obj => {
   let result = [];
   for (let property in obj) {
-    result.push(obj[property]["arcs"][0]);
+    result.push(obj[property]);
   }
   return result;
 };
 
-const drawGraph = countyData => {
-  const margin = { top: 150, right: 50, bottom: 300, left: 200 };
+const drawGraph = (countyData, educationData) => {
+  const COLORS = [
+    "#E8F5E9",
+    "#C8E6C9",
+    "#A5D6A7",
+    "#81C784",
+    "#66BB6A",
+    "#4CAF50",
+    "#43A047",
+    "#388E3C",
+    "#2E7D32",
+    "#1B5E20"
+  ];
+  const margin = { top: 100, right: 0, bottom: 0, left: 0 };
   const fullWidth = 1920;
   const fullHeight = 1080;
   const width = fullWidth - margin.left - margin.right;
   const height = fullHeight - margin.top - margin.bottom;
   var path = d3.geoPath();
+
+  const minMax = d3.extent(educationData, d => d.bachelorsOrHigher);
+
+  const colorScale = d3
+    .scaleQuantize()
+    .domain(minMax)
+    .range(COLORS);
+
   const svg = d3
     .select("#chart")
     .append("svg")
     .attr("width", fullWidth)
     .attr("height", fullHeight)
-    .call(responsivefy)
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
-  const nations = svg
-    .append("g")
-    .selectAll(".nations")
-    .data(topojson.feature(countyData, countyData.objects.nation).features)
-    .enter()
-    .append("path")
-    .attr("class", "nations")
-    .attr("d", path);
 
-  const states = svg
+  const map = svg
     .append("g")
-    .selectAll("states")
-    .data(topojson.feature(countyData, countyData.objects.states).features)
-    .enter()
-    .append("path")
-    .attr("class", "states")
-    .attr("d", path)
-    .style("stroke", "white")
-    .style("stroke-width", "3")
-    .style("opacity", "0.5");
-
-  const counties = svg
-    .append("g")
-    .selectAll(".counties")
+    .selectAll(".county")
     .data(topojson.feature(countyData, countyData.objects.counties).features)
     .enter()
-    .append("path")
-    .attr("class", "counties")
+    .append("path");
+
+  map
+    .attr("class", "county")
+    .attr("data-fips", d => {
+      const value = educationData.find(ele => ele.fips === d.id);
+      return value.fips;
+    })
+    .attr("data-education", d => {
+      const value = educationData.find(ele => ele.fips === d.id)
+        .bachelorsOrHigher;
+      return value;
+    })
     .attr("d", path)
-    .style("stroke", "white")
-    .style("stroke-width", "1")
-    .style("opacity", "0.5");
-};
+    .style("fill", d => {
+      const value = educationData.find(ele => ele.fips === d.id)
+        .bachelorsOrHigher;
+      return colorScale(value);
+    });
 
-const responsivefy = svg => {
-  const container = d3.select(svg.node().parentNode);
-  const width = parseInt(svg.style("width"));
-  const height = parseInt(svg.style("height"));
-  const aspect = width / height;
+  const tooltip = d3
+    .select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .attr("id", "tooltip")
+    .style("opacity", 0);
 
-  const resize = () => {
-    const targetWidth = parseInt(container.style("width"));
-    svg.attr("width", targetWidth);
-    svg.attr("height", Math.round(targetWidth / aspect));
-  };
+  map
+    .on("mouseover", d => {
+      tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 0.9);
+
+      tooltip
+        .html(() => {
+          const obj = educationData.find(ele => ele.fips === d.id);
+          return `${obj.area_name} <br /> ${obj.bachelorsOrHigher}`;
+        })
+        .attr("data-education", () => {
+          const obj = educationData.find(ele => ele.fips === d.id);
+          return obj.bachelorsOrHigher;
+        })
+        .style("left", d3.event.pageX + "px")
+        .style("top", d3.event.pageY + "px")
+        .style("visibility", "visible");
+    })
+    .on("mouseout", d => {
+      tooltip.style("visibility", "hidden");
+    });
+
+  const legendItem = svg
+    .append("g")
+    .attr("id", "legend")
+    .selectAll(".legend-item")
+    .data(COLORS)
+    .enter()
+    .append("g")
+    .attr("class", "legend-item")
+    .attr("x", width);
+
+  legendItem
+    .append("rect")
+    .attr("width", 50)
+    .attr("height", 50)
+    .attr("x", width - 250)
+    .attr("y", (d, i) => i * 50)
+    .style("fill", d => d);
+
+  legendItem
+    .append("text")
+    .attr("x", width - 300)
+    .attr("y", (d, i) => 35 + i * 50)
+    .text(d => {
+      return colorScale
+        .invertExtent(d)
+        .map(value => value.toFixed(1))
+        .join("-");
+    });
 
   svg
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    .attr("preserveAspectRatio", "xMinYMid")
-    .call(resize);
+    .append("text")
+    .attr("id", "title")
+    .attr("class", "title")
+    .attr("transform", `translate(${width / 2.5}, ${-80})`)
+    .text("Monthly Temperature");
 
-  d3.select(window).on(`resize.${container.attr("id")}`, resize);
+  // description
+  svg
+    .append("text")
+    .attr("id", "description")
+    .attr("class", "description")
+    .attr("transform", `translate(${width / 2.3}, ${-30})`)
+    .text("1753-2015 Temperatures");
 };
