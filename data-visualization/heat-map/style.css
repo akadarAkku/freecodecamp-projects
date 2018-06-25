@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-size: 62.5%;
+}
+
+.title {
+  font-size: 2.5rem;
+}
+
+.axis {
+  font-size: 1.5rem;
+}
+
+.tooltip {
+  position: fixed;
+  background: white;
+  border: 1px solid black;
+  box-shadow: 2px 2px 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.cell:hover {
+  stroke: black;
+}
+
+.legend {
+  font-size: 1.8rem;
+}
+
+.description {
+  font-size: 1.5rem;
+}
