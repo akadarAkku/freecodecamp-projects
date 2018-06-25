@@ -19,6 +19,7 @@ All projects I completed for [www.freecodecamp.org](https://www.freecodecamp.org
 ## Data Visualization
 * [Bar Chart](http://jm18457.com/freecodecamp-projects/data-visualization/bar-chart/index.html) 
 * [Scatterplot Graph](http://jm18457.com/freecodecamp-projects/data-visualization/scatterplot-graph/index.html) 
+* [Heat Map](http://jm18457.com/freecodecamp-projects/data-visualization/heat-map/index.html) 
 
 ## Apis and Microservices Certification
 
