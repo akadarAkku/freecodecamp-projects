@@ -1,3 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
+
 .tooltip {
   position: fixed;
   background: white;
@@ -5,4 +15,21 @@
   box-shadow: 2px 2px 1px 2px rgba(0, 0, 0, 0.2);
   padding: 0.5rem;
   font-size: 1.3rem;
+}
+
+.svg {
+  display: block;
+  margin: auto;
+}
+.legend-item {
+  stroke: black;
+  stroke-width: 1;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.description {
+  font-size: 1.5rem;
 }

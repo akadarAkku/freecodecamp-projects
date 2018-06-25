@@ -22,6 +22,7 @@ const toArray = obj => {
 };
 
 const drawGraph = (countyData, educationData) => {
+  // constants
   const COLORS = [
     "#E8F5E9",
     "#C8E6C9",
@@ -34,28 +35,31 @@ const drawGraph = (countyData, educationData) => {
     "#2E7D32",
     "#1B5E20"
   ];
-  const margin = { top: 100, right: 0, bottom: 0, left: 0 };
+  const margin = { top: 100, right: 300, bottom: 0, left: 300 };
   const fullWidth = 1920;
   const fullHeight = 1080;
   const width = fullWidth - margin.left - margin.right;
   const height = fullHeight - margin.top - margin.bottom;
-  var path = d3.geoPath();
 
+  // scale to convert value to color
   const minMax = d3.extent(educationData, d => d.bachelorsOrHigher);
-
   const colorScale = d3
     .scaleQuantize()
     .domain(minMax)
     .range(COLORS);
 
+  // create father svg
   const svg = d3
     .select("#chart")
     .append("svg")
     .attr("width", fullWidth)
     .attr("height", fullHeight)
     .append("g")
+    .attr("class", "svg")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+  // topojson map
+  var path = d3.geoPath();
   const map = svg
     .append("g")
     .selectAll(".county")
@@ -81,6 +85,7 @@ const drawGraph = (countyData, educationData) => {
       return colorScale(value);
     });
 
+  // tooltip
   const tooltip = d3
     .select("body")
     .append("div")
@@ -88,6 +93,7 @@ const drawGraph = (countyData, educationData) => {
     .attr("id", "tooltip")
     .style("opacity", 0);
 
+  // tooltip event handling
   map
     .on("mouseover", d => {
       tooltip
@@ -112,6 +118,7 @@ const drawGraph = (countyData, educationData) => {
       tooltip.style("visibility", "hidden");
     });
 
+  // legend
   const legendItem = svg
     .append("g")
     .attr("id", "legend")
@@ -126,13 +133,13 @@ const drawGraph = (countyData, educationData) => {
     .append("rect")
     .attr("width", 50)
     .attr("height", 50)
-    .attr("x", width - 250)
+    .attr("x", width - 310)
     .attr("y", (d, i) => i * 50)
     .style("fill", d => d);
 
   legendItem
     .append("text")
-    .attr("x", width - 300)
+    .attr("x", width - 250)
     .attr("y", (d, i) => 35 + i * 50)
     .text(d => {
       return colorScale
@@ -141,18 +148,19 @@ const drawGraph = (countyData, educationData) => {
         .join("-");
     });
 
+  // title
   svg
     .append("text")
     .attr("id", "title")
     .attr("class", "title")
-    .attr("transform", `translate(${width / 2.5}, ${-80})`)
-    .text("Monthly Temperature");
+    .attr("transform", `translate(${width / 3}, ${-40})`)
+    .text("US Education");
 
   // description
   svg
     .append("text")
     .attr("id", "description")
     .attr("class", "description")
-    .attr("transform", `translate(${width / 2.3}, ${-30})`)
-    .text("1753-2015 Temperatures");
+    .attr("transform", `translate(${width / 4.5}, ${0})`)
+    .text("Percentage of people with bachelor's degree or higher");
 };
