@@ -4,22 +4,28 @@ const educationURL =
   "https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/for_user_education.json";
 
 const getData = () => {
-  // return fetch(URL).then(response => response.json());
-  return Promise.resolve();
+  return fetch(countyURL).then(response => response.json());
 };
 
 getData().then(data => {
-  // console.log(data);
-  drawGraph();
+  drawGraph(data);
 });
 
-const drawGraph = (data = null) => {
+const toArray = obj => {
+  let result = [];
+  for (let property in obj) {
+    result.push(obj[property]["arcs"][0]);
+  }
+  return result;
+};
+
+const drawGraph = countyData => {
   const margin = { top: 150, right: 50, bottom: 300, left: 200 };
   const fullWidth = 1920;
   const fullHeight = 1080;
   const width = fullWidth - margin.left - margin.right;
   const height = fullHeight - margin.top - margin.bottom;
-
+  var path = d3.geoPath();
   const svg = d3
     .select("#chart")
     .append("svg")
@@ -28,14 +34,38 @@ const drawGraph = (data = null) => {
     .call(responsivefy)
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
+  const nations = svg
+    .append("g")
+    .selectAll(".nations")
+    .data(topojson.feature(countyData, countyData.objects.nation).features)
+    .enter()
+    .append("path")
+    .attr("class", "nations")
+    .attr("d", path);
 
-  svg
-    .append("rect")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("x", 0)
-    .attr("y", 0)
-    .style("fill", "aquamarine");
+  const states = svg
+    .append("g")
+    .selectAll("states")
+    .data(topojson.feature(countyData, countyData.objects.states).features)
+    .enter()
+    .append("path")
+    .attr("class", "states")
+    .attr("d", path)
+    .style("stroke", "white")
+    .style("stroke-width", "3")
+    .style("opacity", "0.5");
+
+  const counties = svg
+    .append("g")
+    .selectAll(".counties")
+    .data(topojson.feature(countyData, countyData.objects.counties).features)
+    .enter()
+    .append("path")
+    .attr("class", "counties")
+    .attr("d", path)
+    .style("stroke", "white")
+    .style("stroke-width", "1")
+    .style("opacity", "0.5");
 };
 
 const responsivefy = svg => {
