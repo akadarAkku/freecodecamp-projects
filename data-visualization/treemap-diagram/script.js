@@ -10,25 +10,19 @@ getData().then(data => {
 });
 
 const drawGraph = data => {
-  const margin = { top: 100, right: 200, bottom: 10, left: 10 };
+  const margin = { top: 100, right: 200, bottom: 10, left: 50 };
   const fullWidth = 1000;
   const fullHeight = 700;
   const width = fullWidth - margin.left - margin.right;
   const height = fullHeight - margin.top - margin.bottom;
 
   const color = d3.scaleOrdinal(d3.schemeCategory10);
+
   const treemap = d3
     .treemap()
-    .tile(d3.treemapResquarify)
     .size([width, height])
-    .round(true)
     .paddingInner(1);
-
-  var root = d3
-    .hierarchy(data)
-    .sum(d => d.value)
-    .sort((a, b) => b.value - a.value);
-
+  var root = d3.hierarchy(data).sum(d => d.value);
   treemap(root);
 
   const svg = d3
