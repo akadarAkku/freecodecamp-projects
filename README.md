@@ -21,6 +21,7 @@ All projects I completed for [www.freecodecamp.org](https://www.freecodecamp.org
 * [Scatterplot Graph](http://jm18457.com/freecodecamp-projects/data-visualization/scatterplot-graph/index.html) 
 * [Heat Map](http://jm18457.com/freecodecamp-projects/data-visualization/heat-map/index.html) 
 * [Choropleth Map](http://jm18457.com/freecodecamp-projects/data-visualization/choropleth-map/index.html) 
+* [Treemap Diagram](http://jm18457.com/freecodecamp-projects/data-visualization/treemap-diagram/index.html) 
 
 ## Apis and Microservices Certification
 
