@@ -10,9 +10,9 @@ getData().then(data => {
 });
 
 const drawGraph = data => {
-  const margin = { top: 150, right: 50, bottom: 50, left: 50 };
-  const fullWidth = 1920;
-  const fullHeight = 1080;
+  const margin = { top: 100, right: 200, bottom: 10, left: 10 };
+  const fullWidth = 1000;
+  const fullHeight = 700;
   const width = fullWidth - margin.left - margin.right;
   const height = fullHeight - margin.top - margin.bottom;
 
@@ -24,7 +24,10 @@ const drawGraph = data => {
     .round(true)
     .paddingInner(1);
 
-  const root = d3.hierarchy(data).sum(d => d.value);
+  var root = d3
+    .hierarchy(data)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
 
   treemap(root);
 
@@ -34,12 +37,18 @@ const drawGraph = data => {
     .attr("width", fullWidth)
     .attr("height", fullHeight)
     .call(responsivefy)
-    .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+  const tooltip = d3
+    .select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .attr("id", "tooltip")
+    .style("opacity", 0);
 
   const cell = svg
     .selectAll("g")
-    .data(root.descendants())
+    .data(root.leaves())
     .enter()
     .append("g")
     .attr("transform", d => `translate(${d.x0}, ${d.y0})`);
@@ -51,6 +60,13 @@ const drawGraph = data => {
     })
     .attr("height", function(d) {
       return d.y1 - d.y0;
+    })
+    .attr("class", "tile")
+    .attr("data-name", d => d.data.name)
+    .attr("data-category", d => d.data.category || d.data.name)
+    .attr("data-value", d => {
+      console.log(d.value);
+      return d.value;
     })
     .style("fill", d => color(d.data.category))
     .style("stroke", "black");
@@ -65,23 +81,46 @@ const drawGraph = data => {
     .attr("x", 10)
     .each(wrap);
 
-  // // chart title
-  // svg
-  //   .append("text")
-  //   .attr("id", "title")
-  //   .attr("class", "title")
-  //   .attr("transform", `translate(${width / 2.5}, ${-80})`)
-  //   .text("Monthly Temperature");
+  cell
+    .on("mouseover", d => {
+      tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 0.9);
 
-  // // description
-  // svg
-  //   .append("text")
-  //   .attr("id", "description")
-  //   .attr("class", "description")
-  //   .attr("transform", `translate(${width / 2.3}, ${-30})`)
-  //   .text("1753-2015 Temperatures");
+      tooltip
+        .html(
+          `${d.data.name} <br />
+        ${d.data.category} <br />
+         ${d.data.value}
+      `
+        )
+        .attr("data-value", d.data.value)
+        .style("left", () => d3.event.pageX + "px")
+        .style("top", d3.event.pageY - 130 + "px")
+        .style("visibility", "visible");
+    })
+    .on("mouseout", d => {
+      tooltip.style("visibility", "hidden");
+    });
 
-  // legend
+  // chart title
+  svg
+    .append("text")
+    .attr("id", "title")
+    .attr("class", "title")
+    .attr("transform", `translate(${width / 2.5}, ${-80})`)
+    .text("Monthly Temperature");
+
+  // description
+  svg
+    .append("text")
+    .attr("id", "description")
+    .attr("class", "description")
+    .attr("transform", `translate(${width / 2.3}, ${-30})`)
+    .text("1753-2015 Temperatures");
+
+  // function to wrap text so no overlap
   function wrap() {
     var self = d3.select(this),
       textLength = self.node().getComputedTextLength(),
@@ -93,6 +132,38 @@ const drawGraph = data => {
       textLength = self.node().getComputedTextLength();
     }
   }
+
+  // legend
+  const legend = svg
+    .selectAll(".legend")
+    .data(color.domain())
+    .enter()
+    .append("g")
+    .attr("class", "legend")
+    .attr("id", "legend")
+    .attr(
+      "transform",
+      (d, i) => `translate(${width + 10},${i * 40 + height / 4})`
+    );
+
+  // legend labels
+  legend
+    .append("text")
+    .attr("x", 110)
+    .attr("y", 16)
+    .style("text-anchor", "end")
+    .text(d => d);
+
+  // legend rectangles
+  legend
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", 30)
+    .attr("height", 30)
+    .attr("class", "legend-item")
+    .attr("legend-item", d => d)
+    .attr("fill", d => color(d));
 };
 
 const responsivefy = svg => {
