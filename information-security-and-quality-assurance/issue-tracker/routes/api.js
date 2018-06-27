@@ -23,6 +23,7 @@ class Project {
     this.status_text = status_text;
     this.created_on = new Date();
     this.updated_on = new Date();
+    this.open = true;
   }
 }
 

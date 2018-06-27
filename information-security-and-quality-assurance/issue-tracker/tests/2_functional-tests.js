@@ -33,7 +33,9 @@ suite("Functional Tests", function() {
             created_by,
             assigned_to,
             status_text,
-            ...rest
+            created_on,
+            updated_on,
+            open
           } = res.body;
           assert.equal(res.status, 200);
           assert.equal(issue_title, "Title");
@@ -41,15 +43,46 @@ suite("Functional Tests", function() {
           assert.equal(created_by, "Functional Test - Every field filled in");
           assert.equal(assigned_to, "Chai and Mocha");
           assert.equal(status_text, "In QA");
-          å;
+          assert.isDefined(created_on);
+          assert.isDefined(updated_on);
+          assert.isTrue(open);
           done();
         });
     });
-    // test("Required fields filled in", function(done) {
-    //   console.log("test");
-    //   assert.equal(res.status, 200);
-    // });
-    test("Missing required fields", function(done) {});
+    test("Required fields filled in", function(done) {
+      chai
+        .request(server)
+        .post("/api/issues/test")
+        .send({
+          issue_title: "Title",
+          issue_text: "text",
+          created_by: "Functional Test - Every field filled in",
+          assigned_to: "Chai and Mocha",
+          status_text: "In QA"
+        })
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          done();
+        });
+    });
+    test("Missing required fields", function(done) {
+      // don't know how to test for all different required fields,
+      // if I can't add test here
+      chai
+        .request(server)
+        .post("/api/issues/test")
+        .send({
+          issue_title: "Title",
+          created_by: "Functional Test - Every field filled in",
+          assigned_to: "Chai and Mocha",
+          status_text: "In QA"
+        })
+        .end(function(err, res) {
+          assert.equal(res.status, 400);
+          assert.equal(res.body.message, "Text missing");
+          done();
+        });
+    });
   });
 
   suite("PUT /api/issues/{project} => text", function() {
