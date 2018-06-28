@@ -36,6 +36,21 @@ module.exports = function(app, collection) {
 
     .get(function(req, res) {
       var project = req.params.project;
+      let filter = {};
+
+      for (let property in req.query) {
+        if (req.query[property] === "true") {
+          filter[property] = true;
+        } else if (req.query[property] === "false") {
+          filter[property] = false;
+        } else {
+          filter[property] = req.query[property];
+        }
+      }
+      collection.find(filter).toArray((err, documents) => {
+        if (err) return res.status(500).send({ err });
+        return res.status(200).send(documents);
+      });
     })
 
     .post(function(req, res) {
@@ -96,8 +111,18 @@ module.exports = function(app, collection) {
         }
       );
     })
-
     .delete(function(req, res) {
       var project = req.params.project;
+      if (req.body._id === undefined) {
+        return res.status(400).send("_id error");
+      }
+
+      collection.deleteOne({ _id: ObjectId(req.body._id) }, (err, result) => {
+        if (err) return res.status(500).send({ err });
+        if (result.n === 0) {
+          return res.status(400).send(`could not delete ${req.body._id}`);
+        }
+        return res.status(200).send(`deleted ${req.body._id}`);
+      });
     });
 };

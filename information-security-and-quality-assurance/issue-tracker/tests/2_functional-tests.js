@@ -73,8 +73,8 @@ suite("Functional Tests", function() {
         .post("/api/issues/test")
         .send({
           issue_title: "Title",
-          created_by: "Functional Test - Every field filled in",
-          assigned_to: "Chai and Mocha",
+          created_by: "user1",
+          assigned_to: "testing purposes",
           status_text: "In QA"
         })
         .end(function(err, res) {
@@ -102,7 +102,7 @@ suite("Functional Tests", function() {
         .request(server)
         .put("/api/issues/test")
         .send({
-          _id: "5b34a39c2d68c518e508792f",
+          _id: "5b34b6e92b05d71cfaf37128",
           issue_title: "Updated Title"
         })
         .end(function(err, res) {
@@ -118,7 +118,7 @@ suite("Functional Tests", function() {
         .request(server)
         .put("/api/issues/test")
         .send({
-          _id: "5b34a39c2d68c518e508792f",
+          _id: "5b34b6e92b05d71cfaf37128",
           created_by: "Functional Test - Every field filled in",
           assigned_to: "Chai and Mocha",
           issue_title: "Updated Title"
@@ -134,35 +134,94 @@ suite("Functional Tests", function() {
   suite(
     "GET /api/issues/{project} => Array of objects with issue data",
     function() {
-      // test('No filter', function(done) {
-      //   chai.request(server)
-      //   .get('/api/issues/test')
-      //   .query({})
-      //   .end(function(err, res){
-      //     assert.equal(res.status, 200);
-      //     assert.isArray(res.body);
-      //     assert.property(res.body[0], 'issue_title');
-      //     assert.property(res.body[0], 'issue_text');
-      //     assert.property(res.body[0], 'created_on');
-      //     assert.property(res.body[0], 'updated_on');
-      //     assert.property(res.body[0], 'created_by');
-      //     assert.property(res.body[0], 'assigned_to');
-      //     assert.property(res.body[0], 'open');
-      //     assert.property(res.body[0], 'status_text');
-      //     assert.property(res.body[0], '_id');
-      //     done();
-      //   });
-      // });
-      // test("One filter", function(done) {});
-      // test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
-      // });
+      test("No filter", function(done) {
+        chai
+          .request(server)
+          .get("/api/issues/test")
+          .query({})
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.isArray(res.body);
+            assert.property(res.body[0], "issue_title");
+            assert.property(res.body[0], "issue_text");
+            assert.property(res.body[0], "created_on");
+            assert.property(res.body[0], "updated_on");
+            assert.property(res.body[0], "created_by");
+            assert.property(res.body[0], "assigned_to");
+            assert.property(res.body[0], "open");
+            assert.property(res.body[0], "status_text");
+            assert.property(res.body[0], "_id");
+            done();
+          });
+      });
+      test("One filter", function(done) {
+        chai
+          .request(server)
+          .get("/api/issues/test?open=true")
+          .query({})
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.isArray(res.body);
+            assert.property(res.body[0], "issue_title");
+            assert.property(res.body[0], "issue_text");
+            assert.property(res.body[0], "created_on");
+            assert.property(res.body[0], "updated_on");
+            assert.property(res.body[0], "created_by");
+            assert.property(res.body[0], "assigned_to");
+            assert.property(res.body[0], "open");
+            assert.property(res.body[0], "status_text");
+            assert.property(res.body[0], "_id");
+            done();
+          });
+      });
+      test("Multiple filters (test for multiple fields you know will be in the db for a return)", function(done) {
+        chai
+          .request(server)
+          .get("/api/issues/test?created_by=user1&assigned_to=testing purposes")
+          .query({})
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.isArray(res.body);
+            assert.property(res.body[0], "issue_title");
+            assert.property(res.body[0], "issue_text");
+            assert.property(res.body[0], "created_on");
+            assert.property(res.body[0], "updated_on");
+            assert.property(res.body[0], "created_by");
+            assert.property(res.body[0], "assigned_to");
+            assert.property(res.body[0], "open");
+            assert.property(res.body[0], "status_text");
+            assert.property(res.body[0], "_id");
+            done();
+          });
+      });
     }
   );
 
   suite("DELETE /api/issues/{project} => text", function() {
-    // test('No _id', function(done) {
-    // });
-    // test('Valid _id', function(done) {
-    // });
+    test("No _id", function(done) {
+      chai
+        .request(server)
+        .delete("/api/issues/test")
+        .end(function(err, res) {
+          if (err) console.log("Error in test:", err);
+          assert.equal(res.status, 400);
+          assert.equal(res.text, "_id error");
+          done();
+        });
+    });
+    test("Valid _id", function(done) {
+      chai
+        .request(server)
+        .delete("/api/issues/test")
+        .send({
+          _id: "5b34b6ea2b05d71cfaf37129"
+        })
+        .end(function(err, res) {
+          if (err) console.log("Error in test:", err);
+          assert.equal(res.status, 200);
+          assert.equal(res.text, "deleted 5b34b6ea2b05d71cfaf37129");
+          done();
+        });
+    });
   });
 });
