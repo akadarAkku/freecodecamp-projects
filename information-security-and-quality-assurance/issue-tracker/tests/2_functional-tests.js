@@ -86,12 +86,49 @@ suite("Functional Tests", function() {
   });
 
   suite("PUT /api/issues/{project} => text", function() {
-    // test('No body', function(done) {
-    // });
-    // test('One field to update', function(done) {
-    // });
-    // test('Multiple fields to update', function(done) {
-    // });
+    test("No body", function(done) {
+      chai
+        .request(server)
+        .put("/api/issues/test")
+        .end(function(err, res) {
+          assert.equal(res.status, 400);
+          assert.deepEqual(res.body, {});
+          assert.equal(res.text, "no updated field sent");
+          done();
+        });
+    });
+    test("One field to update", function(done) {
+      chai
+        .request(server)
+        .put("/api/issues/test")
+        .send({
+          _id: "5b34a39c2d68c518e508792f",
+          issue_title: "Updated Title"
+        })
+        .end(function(err, res) {
+          if (err) console.log("err", err);
+          assert.equal(res.status, 200);
+          assert.equal(res.text, "successfully updated");
+
+          done();
+        });
+    });
+    test("Multiple fields to update", function(done) {
+      chai
+        .request(server)
+        .put("/api/issues/test")
+        .send({
+          _id: "5b34a39c2d68c518e508792f",
+          created_by: "Functional Test - Every field filled in",
+          assigned_to: "Chai and Mocha",
+          issue_title: "Updated Title"
+        })
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.text, "successfully updated");
+          done();
+        });
+    });
   });
 
   suite(
