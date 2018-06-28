@@ -203,7 +203,7 @@ suite("Functional Tests", function() {
         .request(server)
         .delete("/api/issues/test")
         .end(function(err, res) {
-          if (err) console.log("Error in test:", err);
+          // if (err) console.log("Error in test:", err);
           assert.equal(res.status, 400);
           assert.equal(res.text, "_id error");
           done();
@@ -217,9 +217,25 @@ suite("Functional Tests", function() {
           _id: "5b34b6ea2b05d71cfaf37129"
         })
         .end(function(err, res) {
-          if (err) console.log("Error in test:", err);
+          // if (err) console.log("Error in test:", err);
           assert.equal(res.status, 200);
           assert.equal(res.text, "deleted 5b34b6ea2b05d71cfaf37129");
+          done();
+        });
+    });
+  });
+
+  suite("PUT /api/issues/{project} => update open", function() {
+    test("No _id", function(done) {
+      chai
+        .request(server)
+        .put("/api/issues/test")
+        .send({ _id: "5b34b748b377191d2df25736", open: false })
+        .end(function(err, res) {
+          // if (err) console.log("Error in test:", err);
+          console.log(res.text);
+          assert.equal(res.status, 200);
+          assert.equal(res.text, "_id error");
           done();
         });
     });

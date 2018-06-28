@@ -35,6 +35,8 @@ module.exports = function(app, collection) {
     .route("/api/issues/:project")
 
     .get(function(req, res) {
+      console.log("REQUEST GET");
+      console.log(req.query);
       var project = req.params.project;
       let filter = {};
 
@@ -83,17 +85,27 @@ module.exports = function(app, collection) {
     })
 
     .put(function(req, res) {
+      console.log("PUT REQUEST OCCURED");
       var project = req.params.project;
       let counter = 0;
       let update = {};
 
       for (let property in req.body) {
         counter += 1;
-        if (property !== "_id") update[property] = req.body[property];
+        if (property === "_id") {
+        } else if (req.body[property] === "true") {
+          update[property] = true;
+        } else if (req.body[property] === "false") {
+          update[property] = false;
+        } else {
+          update[property] = req.body[property];
+        }
       }
       if (counter === 0) return res.status(400).send("no updated field sent");
       if (req.body._id === undefined)
         return res.status(400).send("missing _id");
+
+      console.log("update", update);
       collection.findOneAndUpdate(
         { _id: ObjectId(req.body._id) },
         { $set: { ...update, updated_on: new Date() } },
@@ -112,6 +124,7 @@ module.exports = function(app, collection) {
       );
     })
     .delete(function(req, res) {
+      console.log("REQUEST DELETE");
       var project = req.params.project;
       if (req.body._id === undefined) {
         return res.status(400).send("_id error");

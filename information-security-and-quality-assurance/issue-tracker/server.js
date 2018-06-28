@@ -2,11 +2,10 @@
 require("dotenv").config();
 var express = require("express");
 var bodyParser = require("body-parser");
-var expect = require("chai").expect;
 var cors = require("cors");
+var helmet = require("helmet");
 
 var MongoClient = require("mongodb");
-var ObjectId = require("mongodb").ObjectID;
 
 const CONNECTION_STRING = process.env.DB;
 
@@ -21,6 +20,7 @@ app.use(cors({ origin: "*" })); //For FCC testing purposes only
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet.xssFilter());
 
 //Routing for API
 MongoClient.connect(
