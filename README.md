@@ -1,5 +1,6 @@
 # Freecodecamp projects
-All projects I completed for [www.freecodecamp.org](https://www.freecodecamp.org)
+25/30 projects I completed for [www.freecodecamp.org](https://www.freecodecamp.org)  
+Not listed are Javascript algorithm projects, since they were done on their website.
 
 ## Responsive Web Design
 * Build a Survey Form 
@@ -82,3 +83,24 @@ All projects I completed for [www.freecodecamp.org](https://www.freecodecamp.org
 * Anonymous Message Board
   * [Live Demo](https://10fcc-anonymous-message-board.glitch.me (website: glitch.com)) (website: glitch.com)
   * [Source Code](https://glitch.com/edit/#!/10fcc-anonymous-message-board) (website: glitch.com)
+
+<!-- ## Legacy Projects
+### Front End
+* Tic Tac Toe Game
+  * [Live Demo]()
+  * [Source Code]()
+* Simon Game
+  * [Live Demo]()
+  * [Source Code]()
+* Game of Life
+  * [Live Demo]()
+  * [Source Code]()
+* Local Weather
+  * [Live Demo]()
+  * [Source Code]()
+* Wikipedia Viewer
+  * [Live Demo]()
+  * [Source Code]()
+* Twitch JSON api
+  * [Live Demo]()
+  * [Source Code]() -->
